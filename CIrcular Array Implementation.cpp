@@ -123,22 +123,21 @@ void deleteElement(int index, int array[])    //Deleting
 
 void findHighest(int index, int array[])   //Traversing
 {
-    int i = 0;
     int highestValue = 0;
     int valueIndex = 0;
-    while (i < ARRAY_SIZE)
+    for (int i = 0; i < ARRAY_SIZE; i++) //traverse all elements of array
     {
+        //if the array at most recent index isn't empty/deleted and it's bigger than highestValue
         if (array[index] != NULL && array[index] >= highestValue)
         {
-            highestValue = array[index];
-            valueIndex = i; 
+            highestValue = array[index]; //make it highest value
+            valueIndex = i; //record i as "number of additions ago"
         }
-        index--;
-        if (index < 0)
+        index--; //most "number of adds ago" back one
+        if (index < 0) //If current operational index is less than array head
         {
-            index += ARRAY_SIZE;
+            index += ARRAY_SIZE; //move current index to the array tail
         }
-        i++;
     }
     
     printf("The highest (most recent) value in the array is %d\n", highestValue);
