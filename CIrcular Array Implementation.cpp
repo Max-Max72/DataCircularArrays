@@ -163,6 +163,11 @@ void displayAll(int index, int array[])
             index += ARRAY_SIZE;
         }
     }
+    for (int j = 0; j < ARRAY_SIZE; j++)
+    {
+        printf("value at array[%d]: %d\n", j, array[j]);
+    }
+    return;
 }
 double getNum(void) {
     char record[121] = { 0 }; // Buffer to store input string
