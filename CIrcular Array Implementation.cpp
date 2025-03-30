@@ -16,6 +16,7 @@ int identifyElement(int index, int array[]);    //Accessing
 void deleteElement(int index, int array[]);    //Deleting
 void findHighest(int index, int array[]);   //Traversing
 void displayAll(int index, int array[]);
+void displayFromZero(int array[]);
 double getNum(void); 
 
 void main(void)
@@ -70,6 +71,7 @@ void main(void)
             break;
         case 5:
             displayAll(index-1, circularArray);
+            displayFromZero(circularArray);
             break;
         case 6:
             exit = true;
@@ -169,7 +171,18 @@ void displayAll(int index, int array[])
     }
     return;
 }
-double getNum(void) {
+
+void displayFromZero(int array[])
+{
+    for (int i = 0; i < ARRAY_SIZE; i++)
+    {
+        printf("Array[%d] = %d\n", i, array[i]);
+    }
+    return;
+}
+
+double getNum(void) 
+{
     char record[121] = { 0 }; // Buffer to store input string
     double number = 0.0; // Variable to store the converted number
 
