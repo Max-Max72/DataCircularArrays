@@ -11,25 +11,27 @@
 
 
 void initializeArray(int array[]); //Setting all initial indices to NULL
-void addElement(int *index, int element, int array[]);  //Adding
+void addElement(int* index, int element, int array[], bool* flip);  //Adding
 int identifyElement(int index, int array[]);    //Accessing
 void deleteElement(int index, int array[]);    //Deleting
 void findHighest(int index, int array[]);   //Traversing
 void displayAll(int index, int array[]);
 void displayFromZero(int array[]);
-double getNum(void); 
+double getNum(void);
 
 void main(void)
 {
     int choice;
     int add;
+    bool flip = false;
     int index = 0;
     int circularArray[ARRAY_SIZE];
+    int searchAgo;
     int indexToDelete;
     int show;
     bool exit = false;
     initializeArray(circularArray);
-    
+
     while (!exit)
     {
         printf("\nPress a button:\n 1) Add\n 2) Display Index\n 3) Delete Index\n 4)Find highest index\n 5) Display All\n 6) Exit");
@@ -39,15 +41,23 @@ void main(void)
         case 1:
             printf("What element would you like to add?");
             add = (int)getNum();
-            addElement(&index, add, circularArray);
-        break;
+            addElement(&index, add, circularArray, &flip);
+            break;
         case 2:
             printf("What index would you like to show?");
             show = (int)getNum();
+            if (flip)
+            {
+                searchAgo = (show - index + 1) % 10;
+            }
+            else
+            {
+                searchAgo = index;
+            }
             if (show >= 0 && show <= 9)
             {
                 printf("value at index %d is %d\n", show, circularArray[show]);
-                printf("that index was added %d additions ago", index);
+                printf("that index was added %d additions ago", (searchAgo));
             }
             else
             {
@@ -67,10 +77,10 @@ void main(void)
             }
             break;
         case 4:
-            findHighest(index-1, circularArray);
+            findHighest(index - 1, circularArray);
             break;
         case 5:
-            displayAll(index-1, circularArray);
+            displayAll(index - 1, circularArray);
             displayFromZero(circularArray);
             break;
         case 6:
@@ -86,19 +96,20 @@ void main(void)
 void initializeArray(int array[]) //Setting all initial indices to NULL
 {
     int arraySize = ARRAY_SIZE - 1;
-    for (int i = 0;i <= arraySize; i++)
+    for (int i = 0; i <= arraySize; i++)
     {
         array[i] = NULL;
     }
     return;
 }
 
-void addElement(int* index, int element, int array[])  //Adding
+void addElement(int* index, int element, int array[], bool* flip)  //Adding
 {
     array[*index] = element;
     if (*index == ARRAY_SIZE - 1)
     {
         *index = 0;
+        *flip = true;
         return;
     }
     (*index)++;
@@ -141,7 +152,7 @@ void findHighest(int index, int array[])   //Traversing
             index += ARRAY_SIZE; //move current index to the array tail
         }
     }
-    
+
     printf("The highest (most recent) value in the array is %d\n", highestValue);
     printf("That value was added %d additions ago", valueIndex);
     return;
@@ -176,7 +187,7 @@ void displayFromZero(int array[])
     return;
 }
 
-double getNum(void) 
+double getNum(void)
 {
     char record[121] = { 0 }; // Buffer to store input string
     double number = 0.0; // Variable to store the converted number
